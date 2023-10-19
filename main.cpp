@@ -1,10 +1,11 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class book
 {
-    public:
-    long long ISBN; 
+public:
+    long long ISBN;
     char auth[100];
     char bname[100];
     char genre[100];
@@ -13,13 +14,14 @@ class book
     {
         cout << "Enter the name of the book: ";
         cin >> bname;
-        cout << "\nEnter the name of the author: ";
+        cout << "Enter the name of the author: ";
         cin >> auth;
-        cout << "\nEnter the ISBN: ";
+        cout << "Enter the ISBN: ";
         cin >> ISBN;
-        cout << "\nEnter the genre:";
+        cout << "Enter the genre: ";
         cin >> genre;
     }
+
     virtual void putdata()
     {
         cout << "Book Name: " << bname << endl;
@@ -31,19 +33,20 @@ class book
 
 class textbook : public book
 {
-    public:
+public:
     char subject[100];
     float edition;
 
-    virtual void getdata()
+    void getdata() override
     {
         book::getdata();
         cout << "Enter the Subject Name: ";
         cin >> subject;
-        cout << "\nEnter the edition of the book: ";
+        cout << "Enter the edition of the book: ";
         cin >> edition;
     }
-    virtual void putdata()
+
+    void putdata() override
     {
         book::putdata();
         cout << "Subject: " << subject << endl;
@@ -53,37 +56,39 @@ class textbook : public book
 
 class novel : public book
 {
-    public:
+public:
     char publication[100];
 
-    virtual void getdata()
+    void getdata() override
     {
         book::getdata();
-        cout << "\nEnter the name of publication: ";
+        cout << "Enter the name of publication: ";
         cin >> publication;
     }
-    virtual void putdata()
+
+    void putdata() override
     {
         book::putdata();
         cout << "Publications: " << publication << endl;
     }
 };
 
-class refrence_book : public book
+class reference_book : public book
 {
-    public:
+public:
     char publication[100];
     float edition;
 
-    virtual void getdata()
+    void getdata() override
     {
         book::getdata();
-        cout << "\nEnter the name of the publication: ";
+        cout << "Enter the name of the publication: ";
         cin >> publication;
-        cout << "\nEnter the edition of the book: ";
+        cout << "Enter the edition of the book: ";
         cin >> edition;
     }
-    virtual void putdata()
+
+    void putdata() override
     {
         book::putdata();
         cout << "Publication: " << publication << endl;
@@ -93,12 +98,13 @@ class refrence_book : public book
 
 class fiction : public book
 {
-    public:
-    virtual void getdata()
+public:
+    void getdata() override
     {
         book::getdata();
     }
-    virtual void putdata()
+
+    void putdata() override
     {
         book::putdata();
     }
@@ -106,13 +112,81 @@ class fiction : public book
 
 class thriller : public book
 {
-    public:
-    virtual void getdata()
+public:
+    void getdata() override
     {
         book::getdata();
     }
-    virtual void putdata()
+
+    void putdata() override
     {
         book::putdata();
     }
 };
+
+int main()
+{
+    vector<book*> library;
+
+    cout << "Library Management System" << endl;
+
+    while (true)
+    {
+        cout << "\nMenu:" << endl;
+        cout << "1. Add Textbook" << endl;
+        cout << "2. Add Novel" << endl;
+        cout << "3. Add Reference Book" << endl;
+        cout << "4. Add Fiction Book" << endl;
+        cout << "5. List Books" << endl;
+        cout << "0. Exit" << endl;
+        cout << "Enter your choice: ";
+        int choice;
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                library.push_back(new textbook());
+                library.back()->getdata();
+                break;
+
+            case 2:
+                library.push_back(new novel());
+                library.back()->getdata();
+                break;
+
+            case 3:
+                library.push_back(new reference_book());
+                library.back()->getdata();
+                break;
+
+            case 4:
+                library.push_back(new fiction());
+                library.back()->getdata();
+                break;
+
+            case 5:
+                cout << "\nList of Books:" << endl;
+                for (const auto& item : library)
+                {
+                    item->putdata();
+                    cout << endl;
+                }
+                break;
+
+            case 0:
+                // Clean up memory
+                for (auto item : library)
+                {
+                    delete item;
+                }
+                return 0;
+
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+        }
+    }
+
+    return 0;
+}
