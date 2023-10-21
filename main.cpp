@@ -90,7 +90,8 @@ public:
     void getdata() override
     {
         book::getdata();
-        cout << "Enter the name of publication: ";
+        // Remove the following line since novels don't have authors.
+        // cout << "Enter the name of publication: ";
         cin >> publication;
     }
 
@@ -100,6 +101,7 @@ public:
         cout << "Publication: " << publication << endl;
     }
 };
+
 
 class reference_book : public book
 {
@@ -176,63 +178,65 @@ int main()
                 break;
 
             case 2:
-                while (true) {
-                    cout << "\nAdd a Book:" << endl;
-                    cout << "1. Add Textbook" << endl;
-                    cout << "2. Add Novel" << endl;
-                    cout << "3. Add Reference Book" << endl;
-                    cout << "4. Add Fiction Book" << endl;
-                    cout << "0. Back to Main Menu" << endl;
-                    cout << "Enter your choice: ";
-                    int addChoice;
-                    cin >> addChoice;
+    	while (true) {
+     	   cout << "\nAdd a Book:" << endl;
+      	  cout << "1. Add Textbook" << endl;
+        	cout << "2. Add Novel" << endl;
+        	cout << "3. Add Reference Book" << endl;
+       	 	cout << "4. Add Fiction Book" << endl;
+        	cout << "0. Back to Main Menu" << endl;
+        	cout << "Enter your choice: ";
+        	int addChoice;
+	        cin >> addChoice;
+	
+	        switch (addChoice) {
+	            case 1:
+	                library.push_back(new textbook());
+	                library.back()->getdata();
+	                break;
+	
+	            case 2:
+	                library.push_back(new novel());
+	                library.back()->getdata();
+	                break;
+	
+	            case 3:
+	                library.push_back(new reference_book());
+	                library.back()->getdata();
+	                break;
+	
+	            case 4:
+	                library.push_back(new fiction());
+	                library.back()->getdata();
+	                break;
+	
+	            case 0:
+	                // Return to the main menu
+	                break;
+	
+	            default:
+	                cout << "Invalid choice. Please try again." << endl;
+	        }
+	
+	        // Ask if the user wants to add more books
+	        cout << "Do you want to add more books? (1 for yes, 0 for no): ";
+	        int addMore;
+	        cin >> addMore;
+	
+	        if (addMore == 0) {
+	            break; // Exit the add books loop
+	        }
+	    }
+	    break;
 
-                    switch (addChoice) {
-                        case 1:
-                            library.push_back(new textbook());
-                            library.back()->getdata();
-                            break;
-
-                        case 2:
-                            library.push_back(new novel());
-                            library.back()->getdata();
-                            break;
-
-                        case 3:
-                            library.push_back(new reference_book());
-                            library.back()->getdata();
-                            break;
-
-                        case 4:
-                            library.push_back(new fiction());
-                            library.back()->getdata();
-                            break;
-
-                        case 0:
-                            // Return to the main menu
-                            break;
-
-                        default:
-                            cout << "Invalid choice. Please try again." << endl;
-                    }
-
-                    // Ask if the user wants to add more books
-                    cout << "Do you want to add more books? (1 for yes, 0 for no): ";
-                    int addMore;
-                    cin >> addMore;
-
-                    if (addMore == 0) {
-                        break; // Exit the add books loop
-                    }
-                }
-                break;
 
             case 0:
                 // Clean up memory and exit
-               for (int i = 0; i < library.size(); i++)
+                for (int i=0; i<library.size();i++)
                 {
                     delete library[i];
                 }
+                library.clear(); 
                 cout << "Thanks for using this system." << endl;
                 return 0;
 
