@@ -229,9 +229,9 @@ int main()
 
             case 0:
                 // Clean up memory and exit
-                for (auto* item : library)
+               for (int i = 0; i < library.size(); i++)
                 {
-                    delete item;
+                    delete library[i];
                 }
                 cout << "Thanks for using this system." << endl;
                 return 0;
