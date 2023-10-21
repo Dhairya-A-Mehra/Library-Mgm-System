@@ -97,7 +97,7 @@ public:
     void putdata() override
     {
         book::putdata();
-        cout << "Publications: " << publication << endl;
+        cout << "Publication: " << publication << endl;
     }
 };
 
