@@ -229,7 +229,7 @@ int main()
 
             case 0:
                 // Clean up memory and exit
-                for (auto item : library)
+                for (auto* item : library)
                 {
                     delete item;
                 }
